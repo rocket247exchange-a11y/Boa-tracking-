@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Internal Wire Tracker | Bank of America</title>
+<style>
+  :root {
+    --bofa-red: #d4001a;
+    --bofa-blue: #003366;
+    --bofa-gray: #f7f8fa;
+    --card-bg: #ffffff;
+  }
+
+  body {
+    margin: 0;
+    background: var(--bofa-gray);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    color: #222;
+  }
+
+  header {
+    background: var(--bofa-blue);
+    padding: 14px 40px;
+    display: flex;
+    align-items: center;
+    color: white;
+  }
+
+  header img {
+    height: 34px;
+    margin-right: 10px;
+  }
+
+  header h2 {
+    font-weight: 500;
+    font-size: 18px;
+  }
+
+  h1 {
+    text-align: center;
+    font-size: 26px;
+    color: var(--bofa-blue);
+    margin: 40px 0 10px;
+    font-weight: 600;
+  }
+
+  .tracker {
+    max-width: 850px;
+    background: var(--card-bg);
+    margin: 0 auto 60px;
+    border-radius: 12px;
+    padding: 40px 50px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  }
+
+  /* Progress Bar */
+  .progress {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 50px 0 70px;
+  }
+
+  .progress::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    width: 84%;
+    height: 6px;
+    background: #e4e6eb;
+    border-radius: 50px;
+    transform: translateY(-50%);
+  }
+
+  .progress-line {
+    position: absolute;
+    top: 50%;
+    left: 8%;
+    height: 6px;
+    width: 33%;
+    background: var(--bofa-red);
+    border-radius: 50px;
+    transform: translateY(-50%) scaleX(0);
+    transform-origin: left;
+    animation: fill 1.5s ease-out forwards;
+  }
+
+  @keyframes fill {
+    to { transform: translateY(-50%) scaleX(1); }
+  }
+
+  .step {
+    position: relative;
+    text-align: center;
+    width: 25%;
+  }
+
+  .dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #fff;
+    border: 4px solid #bbb;
+    margin: 0 auto;
+    position: relative;
+    z-index: 2;
+  }
+
+  .step.active .dot {
+    border-color: var(--bofa-red);
+    background: var(--bofa-red);
+    box-shadow: 0 0 15px rgba(212,0,26,0.4);
+    animation: pulse 1.6s infinite ease-in-out;
+  }
+
+  @keyframes pulse {
+    0%,100% { box-shadow: 0 0 10px rgba(212,0,26,0.3); }
+    50% { box-shadow: 0 0 25px rgba(212,0,26,0.6); }
+  }
+
+  .step span {
+    display: block;
+    margin-top: 10px;
+    font-size: 13px;
+    color: #555;
+  }
+
+  /* Event Cards */
+  .event {
+    background: #fafbfc;
+    border-left: 5px solid var(--bofa-red);
+    padding: 20px 25px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
+  }
+
+  .event h3 {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--bofa-blue);
+  }
+
+  .event p {
+    margin: 6px 0 0;
+    color: #444;
+    font-size: 14px;
+  }
+
+  .timestamp {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #777;
+    font-family: monospace;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <!-- Replace with your local logo file -->
+    <img src="bofa-logo.png" alt="Bank of America Logo">
+    <h2>Bank of America • Internal Wire Tracker</h2>
+  </header>
+
+  <h1>Track Your Transfer</h1>
+
+  <div class="tracker">
+    <div class="progress">
+      <div class="progress-line"></div>
+      <div class="step active"><div class="dot"></div><span>Sent</span></div>
+      <div class="step active"><div class="dot"></div><span>In Transit</span></div>
+      <div class="step"><div class="dot"></div><span>Delivered</span></div>
+      <div class="step"><div class="dot"></div><span>Received</span></div>
+    </div>
+
+    <div class="event">
+      <h3>Wire transfer sent successfully to JASVIR DHILLON</h3>
+      <p>Transfer processed and verified by Bank of America.</p>
+      <div class="timestamp">Timestamp: 2025-10-31 | 10:14 AM</div>
+    </div>
+
+    <div class="event">
+      <h3>Wire on its way to receiver’s REVOLUT PLC</h3>
+      <p>Funds are in transit via the international SWIFT network.</p>
+      <div class="timestamp">Timestamp: 2025-10-31 | 10:16 AM</div>
+    </div>
+
+    <div class="event">
+      <h3>Money sent to receiver’s bank (REVOLUT PLC)</h3>
+      <p>Awaiting acknowledgment from recipient bank.</p>
+      <div class="timestamp">Timestamp: —</div>
+    </div>
+
+    <div class="event">
+      <h3>Money received by recipient</h3>
+      <p>Funds successfully credited to the recipient account.</p>
+      <div class="timestamp">Timestamp: —</div>
+    </div>
+  </div>
+</body>
+</html>
