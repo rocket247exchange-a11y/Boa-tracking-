@@ -1,166 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Internal Wire Tracker | Bank of America</title>
-<style>
-  :root {
-    --bofa-red: #d4001a;
-    --bofa-blue: #003366;
-    --bofa-gray: #f7f8fa;
-    --card-bg: #ffffff;
-  }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bank of America • Internal Wire Tracker</title>
+  <style>
+    :root {
+      --bofa-red: #d4001a;
+      --bofa-blue: #0033a0;
+      --gray-bg: #f7f7f7;
+    }
 
-  body {
-    margin: 0;
-    background: var(--bofa-gray);
-    font-family: "Helvetica Neue", Arial, sans-serif;
-    color: #222;
-  }
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: var(--gray-bg);
+      color: #111;
+      margin: 0;
+      padding: 0;
+    }
 
-  header {
-    background: var(--bofa-blue);
-    padding: 14px 40px;
-    display: flex;
-    align-items: center;
-    color: white;
-  }
+    header {
+      background-color: var(--bofa-blue);
+      color: white;
+      display: flex;
+      align-items: center;
+      padding: 15px 20px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
 
-  header img {
-    height: 34px;
-    margin-right: 10px;
-  }
+    header img {
+      height: 40px;
+      margin-right: 10px;
+    }
 
-  header h2 {
-    font-weight: 500;
-    font-size: 18px;
-  }
+    h1 {
+      text-align: center;
+      color: var(--bofa-red);
+      margin-top: 30px;
+      font-size: 26px;
+    }
 
-  h1 {
-    text-align: center;
-    font-size: 26px;
-    color: var(--bofa-blue);
-    margin: 40px 0 10px;
-    font-weight: 600;
-  }
+    .tracker {
+      width: 80%;
+      margin: 40px auto;
+      background: white;
+      border-radius: 10px;
+      padding: 25px 30px;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+    }
 
-  .tracker {
-    max-width: 850px;
-    background: var(--card-bg);
-    margin: 0 auto 60px;
-    border-radius: 12px;
-    padding: 40px 50px;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-  }
+    .progress {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 30px;
+    }
 
-  /* Progress Bar */
-  .progress {
-    position: relative;
-    display: flex;
-    justify-content: space-between;
-    margin: 50px 0 70px;
-  }
+    .progress-line {
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 4px;
+      width: 66.6%; /* Now reaches up to the third point */
+      background: var(--bofa-red);
+      transform: translateY(-50%);
+      transition: width 0.4s ease;
+    }
 
-  .progress::before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: 8%;
-    width: 84%;
-    height: 6px;
-    background: #e4e6eb;
-    border-radius: 50px;
-    transform: translateY(-50%);
-  }
+    .step {
+      position: relative;
+      text-align: center;
+      z-index: 1;
+    }
 
-  .progress-line {
-    position: absolute;
-    top: 50%;
-    left: 8%;
-    height: 6px;
-    width: 33%;
-    background: var(--bofa-red);
-    border-radius: 50px;
-    transform: translateY(-50%) scaleX(0);
-    transform-origin: left;
-    animation: fill 1.5s ease-out forwards;
-  }
+    .step .dot {
+      height: 20px;
+      width: 20px;
+      border-radius: 50%;
+      border: 3px solid var(--bofa-blue);
+      background-color: white;
+      margin: 0 auto;
+      transition: background-color 0.4s ease, border-color 0.4s ease;
+    }
 
-  @keyframes fill {
-    to { transform: translateY(-50%) scaleX(1); }
-  }
+    .step.active .dot {
+      background-color: var(--bofa-red);
+      border-color: var(--bofa-red);
+    }
 
-  .step {
-    position: relative;
-    text-align: center;
-    width: 25%;
-  }
+    .step span {
+      display: block;
+      margin-top: 8px;
+      font-size: 13px;
+      color: #333;
+    }
 
-  .dot {
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background: #fff;
-    border: 4px solid #bbb;
-    margin: 0 auto;
-    position: relative;
-    z-index: 2;
-  }
+    .event {
+      margin-bottom: 20px;
+      border-left: 3px solid var(--bofa-blue);
+      padding-left: 15px;
+    }
 
-  .step.active .dot {
-    border-color: var(--bofa-red);
-    background: var(--bofa-red);
-    box-shadow: 0 0 15px rgba(212,0,26,0.4);
-    animation: pulse 1.6s infinite ease-in-out;
-  }
+    .event h3 {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--bofa-blue);
+    }
 
-  @keyframes pulse {
-    0%,100% { box-shadow: 0 0 10px rgba(212,0,26,0.3); }
-    50% { box-shadow: 0 0 25px rgba(212,0,26,0.6); }
-  }
+    .event p {
+      margin: 6px 0 0;
+      color: #444;
+      font-size: 14px;
+    }
 
-  .step span {
-    display: block;
-    margin-top: 10px;
-    font-size: 13px;
-    color: #555;
-  }
-
-  /* Event Cards */
-  .event {
-    background: #fafbfc;
-    border-left: 5px solid var(--bofa-red);
-    padding: 20px 25px;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.05);
-  }
-
-  .event h3 {
-    margin: 0;
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--bofa-blue);
-  }
-
-  .event p {
-    margin: 6px 0 0;
-    color: #444;
-    font-size: 14px;
-  }
-
-  .timestamp {
-    margin-top: 6px;
-    font-size: 12px;
-    color: #777;
-    font-family: monospace;
-  }
-</style>
+    .timestamp {
+      margin-top: 6px;
+      font-size: 12px;
+      color: #777;
+      font-family: monospace;
+    }
+  </style>
 </head>
 <body>
   <header>
-    <!-- Replace with your local logo file -->
     <img src="bofa-logo.png" alt="Bank of America Logo">
     <h2>Bank of America • Internal Wire Tracker</h2>
   </header>
@@ -172,7 +136,7 @@
       <div class="progress-line"></div>
       <div class="step active"><div class="dot"></div><span>Sent</span></div>
       <div class="step active"><div class="dot"></div><span>In Transit</span></div>
-      <div class="step"><div class="dot"></div><span>Delivered</span></div>
+      <div class="step active"><div class="dot"></div><span>Delivered</span></div>
       <div class="step"><div class="dot"></div><span>Received</span></div>
     </div>
 
@@ -191,7 +155,7 @@
     <div class="event">
       <h3>Money sent to receiver’s bank (REVOLUT PLC)</h3>
       <p>Awaiting acknowledgment from recipient bank.</p>
-      <div class="timestamp">Timestamp: —</div>
+      <div class="timestamp">Timestamp: 2025-10-31 | 10:19 AM</div>
     </div>
 
     <div class="event">
