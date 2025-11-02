@@ -62,7 +62,7 @@
       top: 50%;
       left: 0;
       height: 4px;
-      width: 66.6%; /* Now reaches up to the third point */
+      width: 0%;
       background: var(--bofa-red);
       transform: translateY(-50%);
       transition: width 0.4s ease;
@@ -121,6 +121,24 @@
       color: #777;
       font-family: monospace;
     }
+
+    .send-btn {
+      display: block;
+      margin: 25px auto 0;
+      padding: 12px 25px;
+      background-color: var(--bofa-red);
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .send-btn:hover {
+      background-color: #a30014;
+    }
   </style>
 </head>
 <body>
@@ -133,11 +151,11 @@
 
   <div class="tracker">
     <div class="progress">
-      <div class="progress-line"></div>
-      <div class="step active"><div class="dot"></div><span>Sent</span></div>
-      <div class="step active"><div class="dot"></div><span>In Transit</span></div>
-      <div class="step active"><div class="dot"></div><span>Delivered</span></div>
-      <div class="step"><div class="dot"></div><span>Received</span></div>
+      <div class="progress-line" id="progressLine"></div>
+      <div class="step" id="step1"><div class="dot"></div><span>Sent</span></div>
+      <div class="step" id="step2"><div class="dot"></div><span>In Transit</span></div>
+      <div class="step" id="step3"><div class="dot"></div><span>Delivered</span></div>
+      <div class="step" id="step4"><div class="dot"></div><span>Received</span></div>
     </div>
 
     <div class="event">
@@ -163,6 +181,43 @@
       <p>Funds successfully credited to the recipient account.</p>
       <div class="timestamp">Timestamp: —</div>
     </div>
+
+    <button class="send-btn" onclick="sendToRevolut()">Send to REVOLUT</button>
   </div>
+
+  <script>
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function sendToRevolut() {
+      const confirmed = confirm(
+        "Sending £9,789.14 to JASVIR DHILLON SINGH\nConfirm receipt charge fee (£75)\n\nClick OK to proceed or Cancel to abort."
+      );
+      if (!confirmed) {
+        alert("Transfer canceled.");
+        return;
+      }
+
+      const progressLine = document.getElementById('progressLine');
+      const steps = [
+        document.getElementById('step1'),
+        document.getElementById('step2'),
+        document.getElementById('step3'),
+        document.getElementById('step4')
+      ];
+
+      progressLine.style.width = '0%';
+      steps.forEach(step => step.classList.remove('active'));
+
+      for (let i = 0; i < steps.length; i++) {
+        await sleep(800); // wait 0.8s between steps
+        steps[i].classList.add('active');
+        progressLine.style.width = `${((i+1)/steps.length)*100}%`;
+      }
+
+      alert("Transfer completed!\n£9,789.14 sent to JASVIR DHILLON SINGH.");
+    }
+  </script>
 </body>
 </html>
