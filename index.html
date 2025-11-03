@@ -34,189 +34,99 @@
     }
 
     h1 {
-      text-align: center;
-      color: var(--bofa-red);
-      margin-top: 30px;
-      font-size: 26px;
-    }
-
-    .tracker {
-      width: 80%;
-      margin: 40px auto;
-      background: white;
-      border-radius: 10px;
-      padding: 25px 30px;
-      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-    }
-
-    .progress {
-      position: relative;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 30px;
-    }
-
-    .progress-line {
-      position: absolute;
-      top: 50%;
-      left: 0;
-      height: 4px;
-      width: 0%;
-      background: var(--bofa-red);
-      transform: translateY(-50%);
-      transition: width 0.4s ease;
-    }
-
-    .step {
-      position: relative;
-      text-align: center;
-      z-index: 1;
-    }
-
-    .step .dot {
-      height: 20px;
-      width: 20px;
-      border-radius: 50%;
-      border: 3px solid var(--bofa-blue);
-      background-color: white;
-      margin: 0 auto;
-      transition: background-color 0.4s ease, border-color 0.4s ease;
-    }
-
-    .step.active .dot {
-      background-color: var(--bofa-red);
-      border-color: var(--bofa-red);
-    }
-
-    .step span {
-      display: block;
-      margin-top: 8px;
-      font-size: 13px;
-      color: #333;
-    }
-
-    .event {
-      margin-bottom: 20px;
-      border-left: 3px solid var(--bofa-blue);
-      padding-left: 15px;
-    }
-
-    .event h3 {
-      margin: 0;
-      font-size: 16px;
+      font-size: 1.3rem;
       font-weight: 600;
-      color: var(--bofa-blue);
     }
 
-    .event p {
-      margin: 6px 0 0;
-      color: #444;
-      font-size: 14px;
+    main {
+      padding: 40px 20px;
+      text-align: center;
     }
 
-    .timestamp {
-      margin-top: 6px;
-      font-size: 12px;
-      color: #777;
-      font-family: monospace;
-    }
-
-    .send-btn {
-      display: block;
-      margin: 25px auto 0;
-      padding: 12px 25px;
+    button {
       background-color: var(--bofa-red);
       color: white;
       border: none;
-      border-radius: 5px;
-      font-size: 16px;
-      font-weight: bold;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border-radius: 8px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      transition: background 0.3s ease;
     }
 
-    .send-btn:hover {
-      background-color: #a30014;
+    button:hover {
+      background-color: #b30015;
+    }
+
+    footer {
+      margin-top: 50px;
+      font-size: 0.9rem;
+      color: #555;
+      text-align: center;
+    }
+
+    /* Toast Notification Styles */
+    .toast {
+      visibility: hidden;
+      min-width: 320px;
+      margin-left: -160px;
+      background-color: #fff;
+      color: #111;
+      text-align: left;
+      border-radius: 8px;
+      padding: 16px;
+      position: fixed;
+      top: 20px;
+      left: 50%;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      z-index: 1000;
+      border-left: 6px solid var(--bofa-red);
+      font-size: 0.95rem;
+      line-height: 1.4;
+      opacity: 0;
+      transform: translateY(-30px);
+      transition: all 0.5s ease;
+    }
+
+    .toast.show {
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
     }
   </style>
 </head>
 <body>
   <header>
-    <img src="bofa-logo.png" alt="Bank of America Logo">
-    <h2>Bank of America • Internal Wire Tracker</h2>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Bank_of_America_logo.svg" alt="Bank of America Logo">
+    <h1>Internal Wire Tracker</h1>
   </header>
 
-  <h1>Track Your Transfer</h1>
+  <main>
+    <h2>Transaction Processing</h2>
+    <p>Your wire transfer is currently being processed. Click below to check the current status.</p>
+    <button onclick="showNotification()">Check Status</button>
+  </main>
 
-  <div class="tracker">
-    <div class="progress">
-      <div class="progress-line" id="progressLine"></div>
-      <div class="step" id="step1"><div class="dot"></div><span>Sent</span></div>
-      <div class="step" id="step2"><div class="dot"></div><span>In Transit</span></div>
-      <div class="step" id="step3"><div class="dot"></div><span>Delivered</span></div>
-      <div class="step" id="step4"><div class="dot"></div><span>Received</span></div>
-    </div>
+  <footer>
+    &copy; 2025 Bank of America Global Banking. All rights reserved.
+  </footer>
 
-    <div class="event">
-      <h3>Wire transfer sent successfully to JASVIR DHILLON</h3>
-      <p>Transfer processed and verified by Bank of America.</p>
-      <div class="timestamp">Timestamp: 2025-10-31 | 10:14 AM</div>
-    </div>
-
-    <div class="event">
-      <h3>Wire on its way to receiver’s REVOLUT PLC</h3>
-      <p>Funds are in transit via the international SWIFT network.</p>
-      <div class="timestamp">Timestamp: 2025-10-31 | 10:16 AM</div>
-    </div>
-
-    <div class="event">
-      <h3>Money sent to receiver’s bank (REVOLUT PLC)</h3>
-      <p>Awaiting acknowledgment from recipient bank.</p>
-      <div class="timestamp">Timestamp: 2025-10-31 | 10:19 AM</div>
-    </div>
-
-    <div class="event">
-      <h3>Money received by recipient</h3>
-      <p>Funds successfully credited to the recipient account.</p>
-      <div class="timestamp">Timestamp: —</div>
-    </div>
-
-    <button class="send-btn" onclick="sendToRevolut()">Send to REVOLUT</button>
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <strong>Notice:</strong> Receipt fees pending for confirmation.<br>
+    Connectivity low due to high network wave.<br>
+    Retry fees again for better network.
   </div>
 
   <script>
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+    function showNotification() {
+      const toast = document.getElementById("toast");
+      toast.classList.add("show");
 
-    async function sendToRevolut() {
-      const confirmed = confirm(
-        "Sending £9,789.14 to JASVIR DHILLON SINGH\nConfirm receipt charge fee (£75)\n\nClick OK to proceed or Cancel to abort."
-      );
-      if (!confirmed) {
-        alert("Transfer canceled.");
-        return;
-      }
-
-      const progressLine = document.getElementById('progressLine');
-      const steps = [
-        document.getElementById('step1'),
-        document.getElementById('step2'),
-        document.getElementById('step3'),
-        document.getElementById('step4')
-      ];
-
-      progressLine.style.width = '0%';
-      steps.forEach(step => step.classList.remove('active'));
-
-      for (let i = 0; i < steps.length; i++) {
-        await sleep(800); // wait 0.8s between steps
-        steps[i].classList.add('active');
-        progressLine.style.width = `${((i+1)/steps.length)*100}%`;
-      }
-
-      alert("Transfer completed!\n£9,789.14 sent to JASVIR DHILLON SINGH.");
+      // Auto-hide after 5 seconds
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 5000);
     }
   </script>
 </body>
